@@ -22,9 +22,11 @@ export default{
               password:loginData.password,
             })
             .then((res) => {
-                localStorage.setItem('userData',JSON.stringify(res.data.userData))
-                router.push({name: 'Dashboard'})
-                console.log(res.data.message)
+                if(res.data.status){
+                    localStorage.setItem('userData',JSON.stringify(res.data.userData))
+                    router.push({name: 'Dashboard'})
+                    console.log(res.data.message)
+                }
 
             })
             .catch((error) => {

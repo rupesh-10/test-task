@@ -3,9 +3,9 @@
         <h4 class="text-center">User And Subjects List: </h4>
         <div class="col-md-6">
             <button class="btn btn-primary" @click="$router.go(-1)">
-                  <b-icon icon="arrow-left"></b-icon> Go Back
+                 Go Back
             </button>
-        <table class="table">
+         <table class="table">
             <thead>
                 <th>User Name</th>
                 <th>Subjects</th>
@@ -25,20 +25,21 @@
     </div>
 </template>
 <script>
-export default{
-    computed:{
-        userAndSubjects(){
-            return this.$store.state.subject.userAndSubjects
-        }
+import {computed, onMounted} from 'vue'
+import {useStore} from 'vuex'
+
+export default {
+    setup() {
+        const store = useStore()
+        const userAndSubjects = computed(()=> store.state.subject.userAndSubjects)
+
+        const fetchSubjectsOfUsers = ()=>{store.dispatch('getUserSubjects')}
+        
+        onMounted(()=>{
+            fetchSubjectsOfUsers()
+        })
+
+        return {userAndSubjects,fetchSubjectsOfUsers}
     },
-    mounted(){
-        this.fetchSubjectsOfUsers()
-    },
-    methods:{
-        fetchSubjectsOfUsers(){
-            this.$store.dispatch('getUserSubjects');
-            console.log(this.userAndSubjects)
-        }
-    }
 }
 </script>
